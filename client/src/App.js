@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 import "./App.css";
+import { AudioRecorder, VideoRecorder } from './record';
 
 const baseUrl = "http://127.0.0.1:5000";
 
@@ -51,6 +52,8 @@ function App() {
             value={msg}
           />
           <button type="submit">Submit</button>
+          <AudioRecorder /> {/* Audio recording */}
+          <VideoRecorder /> {/* Video recording */}
         </form>
       </header>
     </div>
