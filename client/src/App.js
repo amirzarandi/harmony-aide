@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Bg from "./Bg"
+import ReactAudioPlayer from 'react-audio-player';
 
 import "./App.css";
 
@@ -40,6 +42,7 @@ function App() {
         console.log('Stopped Mic on Click')
         console.log(transcript)
         handleSubmit()
+        // playBackgroundAudio();
       }
     }
     mic.onstart = () => {
@@ -56,6 +59,11 @@ function App() {
     }
   }
 
+  const playBackgroundAudio = () => {
+    const audio = new Audio('../../server/data/audio_res.mp3');
+    audio.play();
+  };
+
   const fetchConvos = async () => {
     const data = await axios.get(`${baseUrl}/convos`)
     const { convos } = data.data
@@ -69,7 +77,7 @@ function App() {
   const handleSubmit = async () => {
     try {
       const reply = await axios.post(`${baseUrl}/response`, { 'input': transcript });
-      const data1 = await axios.post(`${baseUrl}/convos`, { 'username': 'Deloris', 'msg': transcript})
+      const data1 = await axios.post(`${baseUrl}/convos`, { 'username': 'Dolores', 'msg': transcript})
       const data2 = await axios.post(`${baseUrl}/convos`, { 'username': 'AI', 'msg': reply['data']})
       setMsg('');
       const dat3 = await axios.post(`${baseUrl}/tts`, { 'text': reply['data'] })
@@ -86,6 +94,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
+        {/* <Bg /> */}
         <div className="container">
           <div className="box">
             <button className="Record-button">
@@ -95,6 +104,11 @@ function App() {
         </div>
         <form onSubmit={handleSubmit}>
         </form>
+        <ReactAudioPlayer
+  src="audio_res.mp3"
+  autoPlay
+  controls
+/>
       </header>
     </div>
   );

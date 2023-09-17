@@ -17,6 +17,6 @@ def tts(text):
     text = [line.replace('\n','') for line in text]
     text = ''.join(str(line) for line in text)
 
-    with open('./data/audio_res.mp3', 'wb') as audio_file:
+    with open('../client/public/audio_res.mp3', 'wb') as audio_file:
         res = TextToSpeech.synthesize(text, accept='audio/mp3', voice='en-US_HenryV3Voice').get_result()
         audio_file.write(res.content)
