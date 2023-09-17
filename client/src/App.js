@@ -73,7 +73,7 @@ function App() {
   const handleSubmit = async () => {
     try {
       const reply = await axios.post(`${baseUrl}/response`, { 'input': transcript });
-      const data1 = await axios.post(`${baseUrl}/convos`, { 'username': 'Deloris', 'msg': transcript})
+      const data1 = await axios.post(`${baseUrl}/convos`, { 'username': 'Dolores', 'msg': transcript})
       const data2 = await axios.post(`${baseUrl}/convos`, { 'username': 'AI', 'msg': reply['data']})
       setMsg('');
       const dat3 = await axios.post(`${baseUrl}/tts`, { 'text': reply['data'] })
