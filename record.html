@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<body>
+    <button id="record" value="OFF" onclick="record(this);" style="border-radius: 50%; max-width:50%; max-height: 30%; background-color: red;"></button>
+    <audio id="recordedAudio"></audio>
+    <script>
+        navigator.mediaDevices.getUserMedia({audio:true}).then(stream => {handlerFunction(stream)})
+
+        function handlerFunction(stream) {
+            rec = new MediaRecorder(stream);
+            rec.ondataavailable = e => {
+                audioChunks.push(e.data);
+                if (rec.state == "inactive"){
+                    let blob = new Blob(audioChunks,{type:'audio/wav'});
+                    console.log(blob);
+                    recordedAudio.src = URL.createObjectURL(blob);
+                    recordedAudio.controls=true;
+                    recordedAudio.autoplay=true;
+                    recordedAudio.onerror=function(){console.log(recordedAudio.error.code);};
+                }
+            }
+        }
+
+        function record(button) {
+            if (button.value == "OFF") {
+                button.value = "ON";
+                button.style.backgroundColor = 'blue';
+                audioChunks = [];
+                rec.start();
+            } else {
+                button.value = "OFF";
+                button.style.backgroundColor = 'red';
+                rec.stop();
+            }
+        }
+    </script>
+</body>
