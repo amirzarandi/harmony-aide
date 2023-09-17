@@ -1,22 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import axios from "axios";
+
+import "./App.css";
+
+const baseUrl = "http://127.0.0.1:5000";
 
 function App() {
+  const [msg, setMsg] = useState("");
+
+  const handleChange = (e) => {
+    setMsg(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(msg);
+  };
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <form>
+          <label htmlfor="msg">Message</label>
+          <input
+            onChange={handleChange}
+            type="text"
+            name="msg"
+            id="msg"
+            value={msg}
+          />
+        </form>
       </header>
     </div>
   );
