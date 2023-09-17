@@ -41,3 +41,25 @@ input, button {
     transform: rotate(360deg);
   }
 }
+
+.Record-button {
+  width: 100px;
+  height: 100px;
+  background: transparent;
+  object-fit: contain;
+  padding: 0;
+  border: none;
+  background: none;
+}
+
+.Record-button img {
+  width: 100px !important;
+  height: 100px !important;
+}
+
+.Record-button:active {
+  border-style: outset;
+  padding: 0;
+  border: none;
+  background: none;
+}

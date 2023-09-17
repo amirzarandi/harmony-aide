@@ -5,6 +5,9 @@ import ReactAudioPlayer from 'react-audio-player';
 
 import "./App.css";
 
+import recordImg from "./assets/record.png";
+import recordingImg from "./assets/recording.png";
+
 const baseUrl = "http://127.0.0.1:5000";
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
 const mic = new SpeechRecognition()
@@ -20,6 +23,7 @@ function App() {
   const [note, setNote] = useState(null)
   const[savedNotes, setSavedNotes] = useState([])
   const [transcript, setTranscript] = useState("")
+  const [btnImg, setBtnImg] = useState(recordImg);
 
   useEffect(() => {
     handleListen()
@@ -96,8 +100,9 @@ function App() {
         {/* <Bg /> */}
         <div className="container">
           <div className="box">
-            {isListening ? <span>🎤</span> : <span>🔴🎤</span>}
-            <button onClick={() => setIsListening(prevState => !prevState)}>Start/Stop</button>
+            <button className="Record-button">
+              <img src={btnImg} alt="record" onClick={() => {setIsListening(prevState => !prevState); isListening ? setBtnImg(recordImg) : setBtnImg(recordingImg)}} />
+            </button>
           </div>
         </div>
         <form onSubmit={handleSubmit}>
