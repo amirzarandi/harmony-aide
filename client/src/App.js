@@ -22,9 +22,13 @@ function App() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const data = await axios.post(`${baseUrl}/convos`, { 'username': 'amir', msg });
-      setConvosList([...convosList, data.data])
+
+      const reply = await axios.post(`${baseUrl}/response`, { 'input': msg });
+      const data1 = await axios.post(`${baseUrl}/convos`, { 'username': 'Deloris', msg})
+      const data2 = await axios.post(`${baseUrl}/convos`, { 'username': 'AI', 'msg': reply['data']})
       setMsg('');
+      const dat3 = await axios.post(`${baseUrl}/tts`, { 'text': reply['data'] })
+      console.log(reply)
     } catch (err) {
       console.error(err.message)
     }

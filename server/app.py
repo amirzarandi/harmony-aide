@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from chatbot import processText
 from lipsync import lipSync
+from TTS import tts
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://localhost/palliative"
@@ -19,7 +20,10 @@ class Convo(db.Model):
     
     def __init__(self, username, msg):
         self.username = username
-        self.msg = msg
+        if len(msg) > 150:
+            self.msg = msg[-150:]
+        else:
+            self.msg = msg
 
 def format_convo(convo):
     return {
@@ -27,6 +31,26 @@ def format_convo(convo):
         "username": convo.username,
         "msg": convo.msg
     }
+
+def convo_toString(convo):
+    return convo.username + ": " + convo.msg
+
+# generate AI response
+@app.route('/response', methods = ['POST'])
+def get_response():
+    input = request.json['input']
+    convos = Convo.query.order_by(Convo.id.desc()).limit(4).all()
+    convo_list = [convo_toString(convo) for convo in convos]
+    memory = "\n".join(convo_list)
+    return processText(input, memory)
+
+# text to speech
+@app.route('/tts', methods = ['POST'])
+def get_tts():
+    input = request.json['text'] 
+    tts(input)
+    return 'success'
+
 
 @app.route('/')
 def hello():
