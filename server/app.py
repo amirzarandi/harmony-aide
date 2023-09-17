@@ -49,8 +49,18 @@ def get_convos():
 
 # get single convo
 @app.route('/convos/<id>', methods = ['GET'])
-# def get_convo(id):
+def get_convo(id):
+    convo = Convo.query.filter_by(id=id).one()
+    formatted_convo = format_convo(convo)
+    return {'convo': formatted_convo}
 
+# delete an event
+@app.route('/convos/<id>', methods = ['DELETE'])
+def delete_convo(id):
+    convo = Convo.query.filter_by(id=id).one()
+    db.session.delete(convo)
+    db.session.commit()
+    return f'Convo (id: {id}) deleted!'
 
 if __name__ == '__main__':
     app.run()
