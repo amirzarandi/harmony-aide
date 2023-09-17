@@ -9,5 +9,5 @@ def stt(wav_path):
 
 # print(stt("server/audio_test.wav").text)
 with open("server/data/extracted.txt","w") as f:
-    f.write(stt("server/audio_test.wav").text)
+    f.write(stt("server/data/audio_ext.wav").text)
 f.close()

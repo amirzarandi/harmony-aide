@@ -1,6 +1,9 @@
 import os
 import requests
 
+from dotenv import load_dotenv
+load_dotenv()
+
 def LipSync(video, audio):
     payload = {
         "input_face": video,
