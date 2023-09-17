@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <body>
-    <button id="record" value="OFF" onclick="record(this);" style="border-radius: 50%; max-width:50%; max-height: 30%; background-color: red;"></button>
+    <button id="recordAudio" value="OFF" onclick="recordAudio(this);" style="border-radius: 50%; max-width:50%; max-height: 30%; background-color: red;"></button>
     <audio id="recordedAudio"></audio>
     <script>
-        navigator.mediaDevices.getUserMedia({audio:true}).then(stream => {handlerFunction(stream)})
+        navigator.mediaDevices.getUserMedia({audio:true}).then(stream => {audioHandlerFunction(stream)})
 
-        function handlerFunction(stream) {
+        function audioHandlerFunction(stream) {
             rec = new MediaRecorder(stream);
             rec.ondataavailable = e => {
                 audioChunks.push(e.data);
@@ -20,11 +20,45 @@
             }
         }
 
-        function record(button) {
+        function recordAudio(button) {
             if (button.value == "OFF") {
                 button.value = "ON";
                 button.style.backgroundColor = 'blue';
                 audioChunks = [];
+                rec.start();
+            } else {
+                button.value = "OFF";
+                button.style.backgroundColor = 'red';
+                rec.stop();
+            }
+        }
+    </script>
+
+    <button id="recordVideo" value="OFF" onclick="record(this);" style="border-radius: 50%; max-width:50%; max-height: 30%; background-color: red;"></button>
+    <video id="recordedVideo"></video>
+    <script>
+        navigator.mediaDevices.getUserMedia({video:true}).then(stream => {handlerFunction(stream)})
+
+        function handlerFunction(stream) {
+            rec = new MediaRecorder(stream);
+            rec.ondataavailable = e => {
+                videoChunks.push(e.data);
+                if (rec.state == "inactive"){
+                    let blob = new Blob(videoChunks,{type:'video/mp4'});
+                    console.log(blob);
+                    recordedVideo.src = URL.createObjectURL(blob);
+                    recordedVideo.controls=true;
+                    recordedVideo.autoplay=true;
+                    recordedVideo.onerror=function(){console.log(recordedVideo.error.code);};
+                }
+            }
+        }
+
+        function record(button) {
+            if (button.value == "OFF") {
+                button.value = "ON";
+                button.style.backgroundColor = 'blue';
+                videoChunks = [];
                 rec.start();
             } else {
                 button.value = "OFF";
