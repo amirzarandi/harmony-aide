@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Bg from "./Bg"
+import ReactAudioPlayer from 'react-audio-player';
 
 import "./App.css";
 
@@ -36,6 +38,7 @@ function App() {
         console.log('Stopped Mic on Click')
         console.log(transcript)
         handleSubmit()
+        // playBackgroundAudio();
       }
     }
     mic.onstart = () => {
@@ -51,6 +54,11 @@ function App() {
       }
     }
   }
+
+  const playBackgroundAudio = () => {
+    const audio = new Audio('../../server/data/audio_res.mp3');
+    audio.play();
+  };
 
   const fetchConvos = async () => {
     const data = await axios.get(`${baseUrl}/convos`)
@@ -82,6 +90,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
+        {/* <Bg /> */}
         <div className="container">
           <div className="box">
             {isListening ? <span>🎤</span> : <span>🔴🎤</span>}
@@ -90,6 +99,11 @@ function App() {
         </div>
         <form onSubmit={handleSubmit}>
         </form>
+        <ReactAudioPlayer
+  src="audio_res.mp3"
+  autoPlay
+  controls
+/>
       </header>
     </div>
   );
