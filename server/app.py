@@ -90,5 +90,11 @@ def delete_convo(id):
     db.session.commit()
     return f'Convo (id: {id}) deleted!'
 
+@app.route('/lipsync', methods = ['POST'])
+def lipsync():
+    link = lipSync("https://storage.googleapis.com/palliative-ai/video.mp4", "https://github.com/amirzarandi/palliative-ai-2/blob/b1cd04f5262991ae59e2910a5c319938c8354c56/server/data/audio_ext.wav")
+    return {'link': link}
+
+
 if __name__ == '__main__':
     app.run()
