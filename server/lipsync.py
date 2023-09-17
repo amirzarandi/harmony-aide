@@ -4,7 +4,7 @@ import requests
 from dotenv import load_dotenv
 load_dotenv()
 
-def LipSync(video, audio):
+def lipSync(video, audio):
     payload = {
         "input_face": video,
         "input_audio": audio,
@@ -24,5 +24,5 @@ def LipSync(video, audio):
     print(result['output']['output_video'])
     return result['output']['output_video']
 
-if __name__ == '__main__':
-    LipSync("https://storage.googleapis.com/palliative-ai/video.mp4", "https://storage.googleapis.com/palliative-ai/voice.wav")
+# if __name__ == '__main__':
+#     LipSync("https://storage.googleapis.com/palliative-ai/video.mp4", "https://storage.googleapis.com/palliative-ai/voice.wav")

@@ -13,14 +13,10 @@ authenticator = IAMAuthenticator(apikey)
 tts = TextToSpeechV1(authenticator=authenticator)
 tts.set_service_url(url)
 
-with open('server/data/response.txt','r') as f:
-    text = f.readlines()
-f.close()
-
-text = [line.replace('\n','') for line in text]
-
-text = ''.join(str(line) for line in text)
-
-with open('server/data/audio_res.mp3', 'wb') as audio_file:
-    res = tts.synthesize(text, accept='audio/mp3', voice='en-US_HenryV3Voice').get_result()
-    audio_file.write(res.content)
+def tts(text):
+    text = [line.replace('\n','') for line in text]
+    text = ''.join(str(line) for line in text)
+    
+    with open('server/data/audio_res.mp3', 'wb') as audio_file:
+        res = tts.synthesize(text, accept='audio/mp3', voice='en-US_HenryV3Voice').get_result()
+        audio_file.write(res.content)
