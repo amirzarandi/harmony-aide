@@ -38,6 +38,9 @@ function App() {
         console.log('Stopped Mic on Click')
         console.log(transcript)
         handleSubmit()
+        setTimeout(() => {
+          window.location.reload();
+        }, 5000);
         // playBackgroundAudio();
       }
     }
