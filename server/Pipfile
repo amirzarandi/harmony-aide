@@ -11,6 +11,8 @@ python-dotenv = "*"
 flask-cors = "*"
 requests = "*"
 openai = "*"
+ibm-watson = "*"
+ibm-cloud-sdk-core = "*"
 
 [dev-packages]
 
