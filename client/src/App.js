@@ -89,15 +89,6 @@ function App() {
           </div>
         </div>
         <form onSubmit={handleSubmit}>
-          <label htmlfor="msg">Message</label>
-          <input
-            onChange={handleChange}
-            type="text"
-            name="msg"
-            id="msg"
-            value={msg}
-          />
-          <button type="submit">Submit</button>
         </form>
       </header>
     </div>
